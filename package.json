@@ -1,8 +1,8 @@
 {
   "name": "topo",
   "description": "Topological sorting with grouping support",
-  "version": "1.0.0",
-  "repository": "git://github.com/spumko/topo",
+  "version": "1.0.1",
+  "repository": "git://github.com/hapijs/topo",
   "main": "index",
   "keywords": [
     "topological",
@@ -11,7 +11,7 @@
     "topsort"
   ],
   "engines": {
-    "node": ">=0.10.22"
+    "node": ">=0.10.30"
   },
   "dependencies": {
       "hoek": "2.x.x"
@@ -25,7 +25,7 @@
   "licenses": [
     {
       "type": "BSD",
-      "url": "http://github.com/spumko/topo/raw/master/LICENSE"
+      "url": "http://github.com/hapijs/topo/raw/master/LICENSE"
     }
   ]
 }
