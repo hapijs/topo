@@ -2,6 +2,7 @@
 
 var Code = require('code');
 var Lab = require('lab');
+var Hoek = require('hoek');
 var Topo = require('..');
 
 
@@ -51,6 +52,31 @@ describe('Topo', function () {
         done();
     });
 
+    it('sorts dependencies (before as array)', function (done) {
+
+        var scenario = [
+            { id: '0', group: 'a' },
+            { id: '1', group: 'b' },
+            { id: '2', before: ['a', 'b'] },
+        ];
+
+        expect(testDeps(scenario)).to.equal('201');
+        done();
+    });
+
+    it('sorts dependencies (after as array)', function (done) {
+
+        var scenario = [
+            { id: '0', after: ['a', 'b'] },
+            { id: '1', group: 'a' },
+            { id: '2', group: 'b' },
+        ];
+
+        expect(testDeps(scenario)).to.equal('120');
+        done();
+    });
+
+
     it('sorts dependencies (seq)', function (done) {
 
         var scenario = [
@@ -64,7 +90,7 @@ describe('Topo', function () {
         done();
     });
 
-    it('sorts dependencies (explicit)', function (done) {
+    it('sorts dependencies (explicitly using after or before)', function (done) {
 
         var set = '0123456789abcdefghijklmnopqrstuvwxyz';
         var groups = set.split('');
@@ -83,19 +109,29 @@ describe('Topo', function () {
             }
         };
 
-        var scenario = [];
+        var scenarioAfter = [];
+        var scenarioBefore = [];
         for (var i = 0, il = groups.length; i < il; ++i) {
             var item = {
                 id: groups[i],
-                group: groups[i],
-                after: i ? groups.slice(0, i) : [],
+                group: groups[i]
+            };
+            var afterMod = {
+                after: i ? groups.slice(0, i) : []
+            };
+            var beforeMod = {
                 before: groups.slice(i + 1)
             };
-            scenario.push(item);
+
+            scenarioAfter.push(Hoek.applyToDefaults(item, afterMod));
+            scenarioBefore.push(Hoek.applyToDefaults(item, beforeMod));
         }
 
-        fisherYates(scenario);
-        expect(testDeps(scenario)).to.equal(set);
+        fisherYates(scenarioAfter);
+        expect(testDeps(scenarioAfter)).to.equal(set);
+
+        fisherYates(scenarioBefore);
+        expect(testDeps(scenarioBefore)).to.equal(set);
         done();
     });
 
