@@ -67,18 +67,9 @@ describe('Topo', function () {
     it('sorts dependencies (explicit)', function (done) {
 
         var set = '0123456789abcdefghijklmnopqrstuvwxyz';
-        var array = set.split('');
+        var groups = set.split('');
 
-        var scenario = [];
-        for (var i = 0, il = array.length; i < il; ++i) {
-            var item = {
-                id: array[i],
-                group: array[i],
-                after: i ? array.slice(0, i) : [],
-                before: array.slice(i + 1)
-            };
-            scenario.push(item);
-        }
+        // Use Fisher-Yates for shuffling
 
         var fisherYates = function (array) {
 
@@ -91,6 +82,17 @@ describe('Topo', function () {
                 array[j] = tempi;
             }
         };
+
+        var scenario = [];
+        for (var i = 0, il = groups.length; i < il; ++i) {
+            var item = {
+                id: groups[i],
+                group: groups[i],
+                after: i ? groups.slice(0, i) : [],
+                before: groups.slice(i + 1)
+            };
+            scenario.push(item);
+        }
 
         fisherYates(scenario);
         expect(testDeps(scenario)).to.equal(set);
