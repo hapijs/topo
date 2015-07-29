@@ -57,7 +57,7 @@ describe('Topo', function () {
         var scenario = [
             { id: '0', group: 'a' },
             { id: '1', group: 'b' },
-            { id: '2', before: ['a', 'b'] },
+            { id: '2', before: ['a', 'b'] }
         ];
 
         expect(testDeps(scenario)).to.equal('201');
@@ -69,7 +69,7 @@ describe('Topo', function () {
         var scenario = [
             { id: '0', after: ['a', 'b'] },
             { id: '1', group: 'a' },
-            { id: '2', group: 'b' },
+            { id: '2', group: 'b' }
         ];
 
         expect(testDeps(scenario)).to.equal('120');
