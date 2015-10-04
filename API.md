@@ -20,9 +20,10 @@ Returns an array of the topologically sorted nodes.
 ### `topo.nodes`
 An array of the topologically sorted nodes.  This list is renewed upon each call to [`topo.add()`](#topoaddnodes-options).
 
-### `topo.merge(other)`
+### `topo.merge(others)`
 Merges another `Topo` object into the current object where:
-- `other` - the other object to be merged into the current one.
+- `others` - the other object or array of objects to be merged into the current one. `null`
+  values are ignored.
 
 Returns an array of the topologically sorted nodes. Will throw if a dependency error is found as a result of the
 combined items.

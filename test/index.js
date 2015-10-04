@@ -222,6 +222,30 @@ describe('Topo', function () {
             done();
         });
 
+        it('merges objects (multiple)', function (done) {
+
+            var topo1 = new Topo();
+            topo1.add('0', { before: 'a', sort: 1 });
+            topo1.add('2', { before: 'a', sort: 3 });
+            topo1.add('4', { after: 'c', group: 'b', sort: 5 });
+
+            var topo2 = new Topo();
+            topo2.add('6', { group: 'd', sort: 7 });
+            topo2.add('8', { before: 'd', sort: 9 });
+
+            var other = new Topo();
+            other.add('1', { after: 'f', group: 'a', sort: 2 });
+            other.add('3', { before: ['b', 'c'], group: 'a', sort: 4 });
+            other.add('5', { group: 'c', sort: 6 });
+            other.add('7', { group: 'e', sort: 8 });
+            other.add('9', { after: 'c', group: 'a', sort: 10 });
+            expect(other.nodes.join('')).to.equal('13579');
+
+            topo1.merge([topo2, null, other]);
+            expect(topo1.nodes.join('')).to.equal('0213547869');
+            done();
+        });
+
         it('throws on circular dependency', function (done) {
 
             var topo = new Topo();
