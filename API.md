@@ -13,8 +13,19 @@ Specifies an additional node or list of nodes to be topologically sorted where:
     - `group` - a string naming the group to which `nodes` should be assigned.  The group name `'?'` is reserved.
     - `before` - a string or array of strings specifying the groups that `nodes` must precede in the topological sort.
     - `after` - a string or array of strings specifying the groups that `nodes` must succeed in the topological sort.
+    - `sort` - a numerical value used to sort items when performing a `topo.merge()`.
 
 Returns an array of the topologically sorted nodes.
 
 ### `topo.nodes`
 An array of the topologically sorted nodes.  This list is renewed upon each call to [`topo.add()`](#topoaddnodes-options).
+
+### `topo.merge(other)`
+Merges another `Topo` object into the current object where:
+- `other` - the other object to be merged into the current one.
+
+Returns an array of the topologically sorted nodes. Will throw if a dependency error is found as a result of the
+combined items.
+
+If the order in which items have been added to each list matters, use the `sort` option in `topo.add()` with an incrementing
+value providing an absolute sort order among all items added to either object.
