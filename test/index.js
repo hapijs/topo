@@ -150,4 +150,117 @@ describe('Topo', function () {
 
         done();
     });
+
+    describe('merge()', function () {
+
+        it('merges objects', function (done) {
+
+            var topo = new Topo();
+            topo.add('0', { before: 'a' });
+            topo.add('2', { before: 'a' });
+            topo.add('4', { after: 'c', group: 'b' });
+            topo.add('6', { group: 'd' });
+            topo.add('8', { before: 'd' });
+            expect(topo.nodes.join('')).to.equal('02486');
+
+            var other = new Topo();
+            other.add('1', { after: 'f', group: 'a' });
+            other.add('3', { before: ['b', 'c'], group: 'a' });
+            other.add('5', { group: 'c' });
+            other.add('7', { group: 'e' });
+            other.add('9', { after: 'c', group: 'a' });
+            expect(other.nodes.join('')).to.equal('13579');
+
+            topo.merge(other);
+            expect(topo.nodes.join('')).to.equal('0286135479');
+            done();
+        });
+
+        it('merges objects (explicit sort)', function (done) {
+
+            var topo = new Topo();
+            topo.add('0', { before: 'a', sort: 1 });
+            topo.add('2', { before: 'a', sort: 2 });
+            topo.add('4', { after: 'c', group: 'b', sort: 3 });
+            topo.add('6', { group: 'd', sort: 4 });
+            topo.add('8', { before: 'd', sort: 5 });
+            expect(topo.nodes.join('')).to.equal('02486');
+
+            var other = new Topo();
+            other.add('1', { after: 'f', group: 'a', sort: 6 });
+            other.add('3', { before: ['b', 'c'], group: 'a', sort: 7 });
+            other.add('5', { group: 'c', sort: 8 });
+            other.add('7', { group: 'e', sort: 9 });
+            other.add('9', { after: 'c', group: 'a', sort: 10 });
+            expect(other.nodes.join('')).to.equal('13579');
+
+            topo.merge(other);
+            expect(topo.nodes.join('')).to.equal('0286135479');
+            done();
+        });
+
+        it('merges objects (mixed sort)', function (done) {
+
+            var topo = new Topo();
+            topo.add('0', { before: 'a', sort: 1 });
+            topo.add('2', { before: 'a', sort: 3 });
+            topo.add('4', { after: 'c', group: 'b', sort: 5 });
+            topo.add('6', { group: 'd', sort: 7 });
+            topo.add('8', { before: 'd', sort: 9 });
+            expect(topo.nodes.join('')).to.equal('02486');
+
+            var other = new Topo();
+            other.add('1', { after: 'f', group: 'a', sort: 2 });
+            other.add('3', { before: ['b', 'c'], group: 'a', sort: 4 });
+            other.add('5', { group: 'c', sort: 6 });
+            other.add('7', { group: 'e', sort: 8 });
+            other.add('9', { after: 'c', group: 'a', sort: 10 });
+            expect(other.nodes.join('')).to.equal('13579');
+
+            topo.merge(other);
+            expect(topo.nodes.join('')).to.equal('0213547869');
+            done();
+        });
+
+        it('merges objects (multiple)', function (done) {
+
+            var topo1 = new Topo();
+            topo1.add('0', { before: 'a', sort: 1 });
+            topo1.add('2', { before: 'a', sort: 3 });
+            topo1.add('4', { after: 'c', group: 'b', sort: 5 });
+
+            var topo2 = new Topo();
+            topo2.add('6', { group: 'd', sort: 7 });
+            topo2.add('8', { before: 'd', sort: 9 });
+
+            var other = new Topo();
+            other.add('1', { after: 'f', group: 'a', sort: 2 });
+            other.add('3', { before: ['b', 'c'], group: 'a', sort: 4 });
+            other.add('5', { group: 'c', sort: 6 });
+            other.add('7', { group: 'e', sort: 8 });
+            other.add('9', { after: 'c', group: 'a', sort: 10 });
+            expect(other.nodes.join('')).to.equal('13579');
+
+            topo1.merge([topo2, null, other]);
+            expect(topo1.nodes.join('')).to.equal('0213547869');
+            done();
+        });
+
+        it('throws on circular dependency', function (done) {
+
+            var topo = new Topo();
+            topo.add('0', { before: 'a', group: 'b' });
+            topo.add('1', { before: 'c', group: 'a' });
+
+            var other = new Topo();
+            other.add('2', { before: 'b', group: 'c' });
+
+            expect(function () {
+
+                topo.merge(other);
+            }).to.throw('merge created a dependencies error');
+
+            done();
+        });
+    });
 });
