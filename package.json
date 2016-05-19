@@ -1,7 +1,7 @@
 {
   "name": "topo",
   "description": "Topological sorting with grouping support",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "repository": "git://github.com/hapijs/topo",
   "main": "lib/index.js",
   "keywords": [
