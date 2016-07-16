@@ -153,6 +153,18 @@ describe('Topo', () => {
         done();
     });
 
+    it('can handle groups named after properties of Object.prototype', (done) => {
+
+        const scenario = [
+            { id: '0', after: ['valueOf', 'toString'] },
+            { id: '1', group: 'valueOf' },
+            { id: '2', group: 'toString' }
+        ];
+
+        expect(testDeps(scenario)).to.equal('120');
+        done();
+    });
+
     describe('merge()', () => {
 
         it('merges objects', (done) => {
