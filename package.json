@@ -17,8 +17,8 @@
     "hoek": "4.x.x"
   },
   "devDependencies": {
-    "code": "3.x.x",
-    "lab": "10.x.x"
+    "code": "4.x.x",
+    "lab": "11.x.x"
   },
   "scripts": {
     "test": "lab -a code -t 100 -L",
