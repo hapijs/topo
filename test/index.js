@@ -3,8 +3,8 @@
 // Load modules
 
 const Code = require('code');
-const Lab = require('lab');
 const Hoek = require('hoek');
+const Lab = require('lab');
 const Topo = require('..');
 
 
@@ -15,9 +15,7 @@ const internals = {};
 
 // Test shortcuts
 
-const lab = exports.lab = Lab.script();
-const describe = lab.describe;
-const it = lab.it;
+const { describe, it } = exports.lab = Lab.script();
 const expect = Code.expect;
 
 
@@ -35,7 +33,7 @@ describe('Topo', () => {
         return topo.nodes.join('');
     };
 
-    it('sorts dependencies', (done) => {
+    it('sorts dependencies', async () => {
 
         const scenario = [
             { id: '0', before: 'a' },
@@ -51,10 +49,9 @@ describe('Topo', () => {
         ];
 
         expect(testDeps(scenario)).to.equal('0213547869');
-        done();
     });
 
-    it('sorts dependencies (before as array)', (done) => {
+    it('sorts dependencies (before as array)', async () => {
 
         const scenario = [
             { id: '0', group: 'a' },
@@ -63,10 +60,9 @@ describe('Topo', () => {
         ];
 
         expect(testDeps(scenario)).to.equal('201');
-        done();
     });
 
-    it('sorts dependencies (after as array)', (done) => {
+    it('sorts dependencies (after as array)', async () => {
 
         const scenario = [
             { id: '0', after: ['a', 'b'] },
@@ -75,11 +71,10 @@ describe('Topo', () => {
         ];
 
         expect(testDeps(scenario)).to.equal('120');
-        done();
     });
 
 
-    it('sorts dependencies (seq)', (done) => {
+    it('sorts dependencies (seq)', async () => {
 
         const scenario = [
             { id: '0' },
@@ -89,10 +84,9 @@ describe('Topo', () => {
         ];
 
         expect(testDeps(scenario)).to.equal('0123');
-        done();
     });
 
-    it('sorts dependencies (explicitly using after or before)', (done) => {
+    it('sorts dependencies (explicitly using after or before)', async () => {
 
         const set = '0123456789abcdefghijklmnopqrstuvwxyz';
         const groups = set.split('');
@@ -134,10 +128,9 @@ describe('Topo', () => {
 
         fisherYates(scenarioBefore);
         expect(testDeps(scenarioBefore)).to.equal(set);
-        done();
     });
 
-    it('throws on circular dependency', (done) => {
+    it('throws on circular dependency', async () => {
 
         const scenario = [
             { id: '0', before: 'a', group: 'b' },
@@ -149,11 +142,9 @@ describe('Topo', () => {
 
             testDeps(scenario);
         }).to.throw('item added into group c created a dependencies error');
-
-        done();
     });
 
-    it('can handle groups named after properties of Object.prototype', (done) => {
+    it('can handle groups named after properties of Object.prototype', async () => {
 
         const scenario = [
             { id: '0', after: ['valueOf', 'toString'] },
@@ -162,12 +153,11 @@ describe('Topo', () => {
         ];
 
         expect(testDeps(scenario)).to.equal('120');
-        done();
     });
 
     describe('merge()', () => {
 
-        it('merges objects', (done) => {
+        it('merges objects', async () => {
 
             const topo = new Topo();
             topo.add('0', { before: 'a' });
@@ -187,10 +177,9 @@ describe('Topo', () => {
 
             topo.merge(other);
             expect(topo.nodes.join('')).to.equal('0286135479');
-            done();
         });
 
-        it('merges objects (explicit sort)', (done) => {
+        it('merges objects (explicit sort)', async () => {
 
             const topo = new Topo();
             topo.add('0', { before: 'a', sort: 1 });
@@ -210,10 +199,9 @@ describe('Topo', () => {
 
             topo.merge(other);
             expect(topo.nodes.join('')).to.equal('0286135479');
-            done();
         });
 
-        it('merges objects (mixed sort)', (done) => {
+        it('merges objects (mixed sort)', async () => {
 
             const topo = new Topo();
             topo.add('0', { before: 'a', sort: 1 });
@@ -233,10 +221,9 @@ describe('Topo', () => {
 
             topo.merge(other);
             expect(topo.nodes.join('')).to.equal('0213547869');
-            done();
         });
 
-        it('merges objects (multiple)', (done) => {
+        it('merges objects (multiple)', async () => {
 
             const topo1 = new Topo();
             topo1.add('0', { before: 'a', sort: 1 });
@@ -257,10 +244,9 @@ describe('Topo', () => {
 
             topo1.merge([topo2, null, other]);
             expect(topo1.nodes.join('')).to.equal('0213547869');
-            done();
         });
 
-        it('throws on circular dependency', (done) => {
+        it('throws on circular dependency', async () => {
 
             const topo = new Topo();
             topo.add('0', { before: 'a', group: 'b' });
@@ -273,8 +259,6 @@ describe('Topo', () => {
 
                 topo.merge(other);
             }).to.throw('merge created a dependencies error');
-
-            done();
         });
     });
 });
