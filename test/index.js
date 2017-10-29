@@ -33,7 +33,7 @@ describe('Topo', () => {
         return topo.nodes.join('');
     };
 
-    it('sorts dependencies', async () => {
+    it('sorts dependencies', () => {
 
         const scenario = [
             { id: '0', before: 'a' },
@@ -51,7 +51,7 @@ describe('Topo', () => {
         expect(testDeps(scenario)).to.equal('0213547869');
     });
 
-    it('sorts dependencies (before as array)', async () => {
+    it('sorts dependencies (before as array)', () => {
 
         const scenario = [
             { id: '0', group: 'a' },
@@ -62,7 +62,7 @@ describe('Topo', () => {
         expect(testDeps(scenario)).to.equal('201');
     });
 
-    it('sorts dependencies (after as array)', async () => {
+    it('sorts dependencies (after as array)', () => {
 
         const scenario = [
             { id: '0', after: ['a', 'b'] },
@@ -74,7 +74,7 @@ describe('Topo', () => {
     });
 
 
-    it('sorts dependencies (seq)', async () => {
+    it('sorts dependencies (seq)', () => {
 
         const scenario = [
             { id: '0' },
@@ -86,7 +86,7 @@ describe('Topo', () => {
         expect(testDeps(scenario)).to.equal('0123');
     });
 
-    it('sorts dependencies (explicitly using after or before)', async () => {
+    it('sorts dependencies (explicitly using after or before)', () => {
 
         const set = '0123456789abcdefghijklmnopqrstuvwxyz';
         const groups = set.split('');
@@ -130,7 +130,7 @@ describe('Topo', () => {
         expect(testDeps(scenarioBefore)).to.equal(set);
     });
 
-    it('throws on circular dependency', async () => {
+    it('throws on circular dependency', () => {
 
         const scenario = [
             { id: '0', before: 'a', group: 'b' },
@@ -144,7 +144,7 @@ describe('Topo', () => {
         }).to.throw('item added into group c created a dependencies error');
     });
 
-    it('can handle groups named after properties of Object.prototype', async () => {
+    it('can handle groups named after properties of Object.prototype', () => {
 
         const scenario = [
             { id: '0', after: ['valueOf', 'toString'] },
@@ -157,7 +157,7 @@ describe('Topo', () => {
 
     describe('merge()', () => {
 
-        it('merges objects', async () => {
+        it('merges objects', () => {
 
             const topo = new Topo();
             topo.add('0', { before: 'a' });
@@ -179,7 +179,7 @@ describe('Topo', () => {
             expect(topo.nodes.join('')).to.equal('0286135479');
         });
 
-        it('merges objects (explicit sort)', async () => {
+        it('merges objects (explicit sort)', () => {
 
             const topo = new Topo();
             topo.add('0', { before: 'a', sort: 1 });
@@ -201,7 +201,7 @@ describe('Topo', () => {
             expect(topo.nodes.join('')).to.equal('0286135479');
         });
 
-        it('merges objects (mixed sort)', async () => {
+        it('merges objects (mixed sort)', () => {
 
             const topo = new Topo();
             topo.add('0', { before: 'a', sort: 1 });
@@ -223,7 +223,7 @@ describe('Topo', () => {
             expect(topo.nodes.join('')).to.equal('0213547869');
         });
 
-        it('merges objects (multiple)', async () => {
+        it('merges objects (multiple)', () => {
 
             const topo1 = new Topo();
             topo1.add('0', { before: 'a', sort: 1 });
@@ -246,7 +246,7 @@ describe('Topo', () => {
             expect(topo1.nodes.join('')).to.equal('0213547869');
         });
 
-        it('throws on circular dependency', async () => {
+        it('throws on circular dependency', () => {
 
             const topo = new Topo();
             topo.add('0', { before: 'a', group: 'b' });
