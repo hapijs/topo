@@ -1,6 +1,12 @@
 # API Reference
 
 ## `Topo`
+
+- [`new Topo()`](#new-topo)
+- [`topo.add(nodes, [options])`](#topoaddnodes-options)
+- [`topo.nodes`](#toponodes)
+- [`topo.merge(others)`](#topomergeothers)
+
 The `Topo` object is the container for topologically sorting a list of nodes with non-circular interdependencies.
 
 ### `new Topo()`
