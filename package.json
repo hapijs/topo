@@ -1,17 +1,12 @@
 {
-  "name": "topo",
+  "name": "@hapi/topo",
   "description": "Topological sorting with grouping support",
   "version": "3.0.3",
   "repository": "git://github.com/hapijs/topo",
   "main": "lib/index.js",
-  "keywords": [
-    "topological",
-    "sort",
-    "toposort",
-    "topsort"
-  ],
+  "keywords": ["topological", "sort", "toposort", "topsort"],
   "dependencies": {
-    "hoek": "6.x.x"
+    "@hapi/hoek": "6.x.x"
   },
   "devDependencies": {
     "code": "5.x.x",

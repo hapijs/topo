@@ -3,7 +3,7 @@
 // Load modules
 
 const Code = require('code');
-const Hoek = require('hoek');
+const Hoek = require('@hapi/hoek');
 const Lab = require('lab');
 const Topo = require('..');
 
