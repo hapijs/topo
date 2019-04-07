@@ -1,10 +1,10 @@
+<a href="http://hapijs.com"><img src="https://github.com/hapijs/assets/blob/master/images/family.svg" width="180px" align="right" /></a>
+
 # topo
 
 Topological sorting with grouping support.
 
 [![Build Status](https://secure.travis-ci.org/hapijs/topo.svg?branch=master)](http://travis-ci.org/hapijs/topo)
-
-Lead Maintainer: [Devin Ivy](https://github.com/devinivy)
 
 ## Usage
 
