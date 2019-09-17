@@ -1,6 +1,5 @@
-# API Reference
 
-## `Topo`
+## topo
 
 - [`new Topo()`](#new-topo)
 - [`topo.add(nodes, [options])`](#topoaddnodes-options)
