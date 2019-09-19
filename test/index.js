@@ -154,7 +154,7 @@ describe('Topo', () => {
         it('merges objects', () => {
 
             const topo = new Topo();
-            topo.add('0', { before: 'a' });
+            topo.add(['0'], { before: 'a' });
             topo.add('2', { before: 'a' });
             topo.add('4', { after: 'c', group: 'b' });
             topo.add('6', { group: 'd' });

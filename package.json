@@ -11,6 +11,9 @@
     "toposort",
     "topsort"
   ],
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "@hapi/hoek": "8.x.x"
   },
