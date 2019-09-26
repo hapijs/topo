@@ -1,6 +1,4 @@
 
-## `Topo`
-
 The `Topo` object is the container for topologically sorting a list of nodes with non-circular interdependencies.
 
 ### `new Topo()`
