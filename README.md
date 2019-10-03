@@ -12,7 +12,7 @@ See the [API Reference](API.md)
 
 **Example**
 ```js
-const Topo = require('topo');
+const Topo = require('@hapi/topo');
 
 const morning = new Topo();
 
