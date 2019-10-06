@@ -1,48 +1,42 @@
-import { Topo } from '..';
+import * as Topo from '..';
 import * as Lab from '@hapi/lab';
+
 
 const { expect } = Lab.types;
 
-const morning = new Topo<string>();
 
-morning.add('Nap', { after: ['breakfast', 'prep']})
+// new Topo.Sorter()
 
-morning.add([
-  'Make toast',
-  'Pour juice'
-], { before: 'breakfast', group: 'prep' });
-
+const morning = new Topo.Sorter<string>();
+morning.add('Nap', { after: ['breakfast', 'prep'] })
+morning.add(['Make toast', 'Pour juice'], { before: 'breakfast', group: 'prep' });
 morning.add('Eat breakfast', { group: 'breakfast' });
 
-const afternoon = new Topo<string>();
+const afternoon = new Topo.Sorter<string>();
+afternoon.add('Eat lunch', { after: ['afternoon', 'prep'], sort: 2 });
 
-afternoon.add('Eat lunch', { after: ['afternoon', 'prep'], sort: 2});
-
-
-// new Topo()
-
-expect.type<object>(new Topo());
+expect.type<object>(new Topo.Sorter());
 
 
-// topo.add()
+// sorter.add()
 
-expect.type<Array<string>>(new Topo<string>().add('Eat breakfast', { group: 'breakfast' }));
-expect.type<Array<number>>(new Topo<number>().add(56, { group: 'numbers' }));
-expect.type<Array<string>>(new Topo<string>().add(["Eat breakfast"], { group: 'breakfast' }));
-expect.type<Array<boolean>>(new Topo<boolean>().add(false, { group: 'booleans' }));
-expect.type<Array<object>>(new Topo<object>().add({ foo: "bar" }, { group: 'object' }));
+expect.type<string[]>(new Topo.Sorter<string>().add('Eat breakfast', { group: 'breakfast' }));
+expect.type<number[]>(new Topo.Sorter<number>().add(56, { group: 'numbers' }));
+expect.type<string[]>(new Topo.Sorter<string>().add(["Eat breakfast"], { group: 'breakfast' }));
+expect.type<boolean[]>(new Topo.Sorter<boolean>().add(false, { group: 'booleans' }));
+expect.type<object[]>(new Topo.Sorter<object>().add({ foo: "bar" }, { group: 'object' }));
 
-expect.error(new Topo<string>().add(56, { group: 'numbers'}));
-expect.error(new Topo<number>().add('Eat breakfast', { group: 'breakfast'}));
-expect.error(new Topo<string>().add([56], { group: 'numbers'}));
-
-
-// topo.nodes
-
-expect.type<Array<string>>(morning.nodes);
-expect.type<Array<string>>(afternoon.nodes);
+expect.error(new Topo.Sorter<string>().add(56, { group: 'numbers' }));
+expect.error(new Topo.Sorter<number>().add('Eat breakfast', { group: 'breakfast' }));
+expect.error(new Topo.Sorter<string>().add([56], { group: 'numbers' }));
 
 
-// topo.merge
+// sorter.nodes
 
-expect.type<Array<string>>(morning.merge(afternoon));
+expect.type<string[]>(morning.nodes);
+expect.type<string[]>(afternoon.nodes);
+
+
+// sorter.merge
+
+expect.type<string[]>(morning.merge(afternoon));

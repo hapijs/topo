@@ -13,11 +13,11 @@ const { describe, it } = exports.lab = Lab.script();
 const expect = Code.expect;
 
 
-describe('Topo', () => {
+describe('Sorter', () => {
 
     const testDeps = function (scenario) {
 
-        const topo = new Topo();
+        const topo = new Topo.Sorter();
         scenario.forEach((record, i) => {
 
             const options = record.before || record.after || record.group ? { before: record.before, after: record.after, group: record.group } : null;
@@ -153,7 +153,7 @@ describe('Topo', () => {
 
         it('merges objects', () => {
 
-            const topo = new Topo();
+            const topo = new Topo.Sorter();
             topo.add(['0'], { before: 'a' });
             topo.add('2', { before: 'a' });
             topo.add('4', { after: 'c', group: 'b' });
@@ -161,7 +161,7 @@ describe('Topo', () => {
             topo.add('8', { before: 'd' });
             expect(topo.nodes.join('')).to.equal('02486');
 
-            const other = new Topo();
+            const other = new Topo.Sorter();
             other.add('1', { after: 'f', group: 'a' });
             other.add('3', { before: ['b', 'c'], group: 'a' });
             other.add('5', { group: 'c' });
@@ -175,7 +175,7 @@ describe('Topo', () => {
 
         it('merges objects (explicit sort)', () => {
 
-            const topo = new Topo();
+            const topo = new Topo.Sorter();
             topo.add('0', { before: 'a', sort: 1 });
             topo.add('2', { before: 'a', sort: 2 });
             topo.add('4', { after: 'c', group: 'b', sort: 3 });
@@ -183,7 +183,7 @@ describe('Topo', () => {
             topo.add('8', { before: 'd', sort: 5 });
             expect(topo.nodes.join('')).to.equal('02486');
 
-            const other = new Topo();
+            const other = new Topo.Sorter();
             other.add('1', { after: 'f', group: 'a', sort: 6 });
             other.add('3', { before: ['b', 'c'], group: 'a', sort: 7 });
             other.add('5', { group: 'c', sort: 8 });
@@ -197,7 +197,7 @@ describe('Topo', () => {
 
         it('merges objects (mixed sort)', () => {
 
-            const topo = new Topo();
+            const topo = new Topo.Sorter();
             topo.add('0', { before: 'a', sort: 1 });
             topo.add('2', { before: 'a', sort: 3 });
             topo.add('4', { after: 'c', group: 'b', sort: 5 });
@@ -205,7 +205,7 @@ describe('Topo', () => {
             topo.add('8', { before: 'd', sort: 9 });
             expect(topo.nodes.join('')).to.equal('02486');
 
-            const other = new Topo();
+            const other = new Topo.Sorter();
             other.add('1', { after: 'f', group: 'a', sort: 2 });
             other.add('3', { before: ['b', 'c'], group: 'a', sort: 4 });
             other.add('5', { group: 'c', sort: 6 });
@@ -219,16 +219,16 @@ describe('Topo', () => {
 
         it('merges objects (multiple)', () => {
 
-            const topo1 = new Topo();
+            const topo1 = new Topo.Sorter();
             topo1.add('0', { before: 'a', sort: 1 });
             topo1.add('2', { before: 'a', sort: 3 });
             topo1.add('4', { after: 'c', group: 'b', sort: 5 });
 
-            const topo2 = new Topo();
+            const topo2 = new Topo.Sorter();
             topo2.add('6', { group: 'd', sort: 7 });
             topo2.add('8', { before: 'd', sort: 9 });
 
-            const other = new Topo();
+            const other = new Topo.Sorter();
             other.add('1', { after: 'f', group: 'a', sort: 2 });
             other.add('3', { before: ['b', 'c'], group: 'a', sort: 4 });
             other.add('5', { group: 'c', sort: 6 });
@@ -242,11 +242,11 @@ describe('Topo', () => {
 
         it('throws on circular dependency', () => {
 
-            const topo = new Topo();
+            const topo = new Topo.Sorter();
             topo.add('0', { before: 'a', group: 'b' });
             topo.add('1', { before: 'c', group: 'a' });
 
-            const other = new Topo();
+            const other = new Topo.Sorter();
             other.add('2', { before: 'b', group: 'c' });
 
             expect(() => {
