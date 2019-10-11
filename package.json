@@ -14,7 +14,7 @@
     "lib"
   ],
   "dependencies": {
-    "@hapi/hoek": "8.x.x"
+    "@hapi/hoek": "^8.3.0"
   },
   "devDependencies": {
     "@hapi/code": "6.x.x",
