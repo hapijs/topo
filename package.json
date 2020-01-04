@@ -5,21 +5,21 @@
   "repository": "git://github.com/hapijs/topo",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "keywords": [
     "topological",
     "sort",
     "toposort",
     "topsort"
   ],
-  "files": [
-    "lib"
-  ],
   "dependencies": {
-    "@hapi/hoek": "^8.3.0"
+    "@hapi/hoek": "^9.0.0"
   },
   "devDependencies": {
-    "@hapi/code": "6.x.x",
-    "@hapi/lab": "20.x.x"
+    "@hapi/code": "8.x.x",
+    "@hapi/lab": "22.x.x"
   },
   "scripts": {
     "test": "lab -a @hapi/code -t 100 -L -Y",
