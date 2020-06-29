@@ -3,6 +3,9 @@
   "description": "Topological sorting with grouping support",
   "version": "2.1.0",
   "repository": "git://github.com/hapijs/topo",
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "main": "lib/index.js",
   "keywords": [
     "topological",
