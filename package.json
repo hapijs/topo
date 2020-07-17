@@ -1,8 +1,11 @@
 {
-  "name": "@hapi/topo",
+  "name": "@commercial/topo",
   "description": "Topological sorting with grouping support",
   "version": "5.0.0",
   "repository": "git://github.com/hapijs/topo",
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -15,7 +18,7 @@
     "topsort"
   ],
   "dependencies": {
-    "@hapi/hoek": "^9.0.0"
+    "@commercial/hoek": "^9.0.0"
   },
   "devDependencies": {
     "@hapi/code": "8.x.x",
@@ -25,5 +28,5 @@
     "test": "lab -a @hapi/code -t 100 -L -Y",
     "test-cov-html": "lab -a @hapi/code -t 100 -L -r html -o coverage.html"
   },
-  "license": "BSD-3-Clause"
+  "license": "SEE LICENSE IN LICENSE.md"
 }
