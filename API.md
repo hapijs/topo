@@ -38,11 +38,12 @@ Specifies an additional node or list of nodes to be topologically sorted where:
     - `sort` - a numerical value used to sort items when performing a `sorter.merge()`.
     - `manual` - if `true`, the array is not sorted automatically and `sorter.sort()` must be called when done adding items.
 
-Returns an array of the topologically sorted nodes (unless `manual` is used in which case the array is unsorted).
+Returns an array of the topologically sorted nodes (unless `manual` is used in which case the array is left unchanged).
 
 ### `sorter.nodes`
 
-An array of the topologically sorted nodes.  This list is renewed upon each call to [`sorter.add()`](#topoaddnodes-options).
+An array of the topologically sorted nodes.  This list is renewed upon each call to [`sorter.add()`](#topoaddnodes-options) unless
+the `manual` is used.
 
 ### `sorter.merge(others)`
 

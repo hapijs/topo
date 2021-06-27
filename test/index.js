@@ -65,7 +65,9 @@ describe('Sorter', () => {
             topo.add(record.id, { ...options, manual: true });
         }
 
+        expect(topo.nodes.join('')).to.equal('');
         expect(topo.sort().join('')).to.equal('0213547869');
+        expect(topo.nodes.join('')).to.equal('0213547869');
     });
 
     it('sorts dependencies (before as array)', () => {
