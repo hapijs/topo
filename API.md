@@ -36,12 +36,14 @@ Specifies an additional node or list of nodes to be topologically sorted where:
     - `before` - a string or array of strings specifying the groups that `nodes` must precede in the topological sort.
     - `after` - a string or array of strings specifying the groups that `nodes` must succeed in the topological sort.
     - `sort` - a numerical value used to sort items when performing a `sorter.merge()`.
+    - `manual` - if `true`, the array is not sorted automatically and `sorter.sort()` must be called when done adding items.
 
-Returns an array of the topologically sorted nodes.
+Returns an array of the topologically sorted nodes (unless `manual` is used in which case the array is left unchanged).
 
 ### `sorter.nodes`
 
-An array of the topologically sorted nodes.  This list is renewed upon each call to [`sorter.add()`](#topoaddnodes-options).
+An array of the topologically sorted nodes.  This list is renewed upon each call to [`sorter.add()`](#topoaddnodes-options) unless
+`manual` is used.
 
 ### `sorter.merge(others)`
 
@@ -54,3 +56,9 @@ combined items.
 
 If the order in which items have been added to each list matters, use the `sort` option in `sorter.add()` with an incrementing
 value providing an absolute sort order among all items added to either object.
+
+### `sorter.sort()`
+
+Sorts the array. Only needed if the `manual` option is used when `add()` is called.
+
+Returns an array of the topologically sorted nodes. Will throw if a dependency error is found.

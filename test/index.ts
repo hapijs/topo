@@ -37,6 +37,12 @@ expect.type<string[]>(morning.nodes);
 expect.type<string[]>(afternoon.nodes);
 
 
-// sorter.merge
+// sorter.merge()
 
 expect.type<string[]>(morning.merge(afternoon));
+
+
+// sorter.sort()
+
+expect.type<string[]>(morning.sort());
+expect.error(morning.sort([]));

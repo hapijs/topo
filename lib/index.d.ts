@@ -23,6 +23,11 @@ export class Sorter<T> {
      * @returns Returns an array of the topologically sorted nodes.
      */
     merge(others: Sorter<T> | Sorter<T>[]): T[];
+
+    /**
+     * Sorts the nodes array (only required if the manual option is used when adding items)
+     */
+    sort(): T[];
 }
 
 
@@ -47,4 +52,9 @@ export interface Options {
      * A number used to sort items with equal before/after requirements
      */
     readonly sort?: number;
+
+    /**
+     * If true, the array is not sorted automatically until sort() is called
+     */
+    readonly manual?: boolean;
 }

@@ -18,11 +18,10 @@ describe('Sorter', () => {
     const testDeps = function (scenario) {
 
         const topo = new Topo.Sorter();
-        scenario.forEach((record, i) => {
-
+        for (const record of scenario) {
             const options = record.before || record.after || record.group ? { before: record.before, after: record.after, group: record.group } : null;
             topo.add(record.id, options);
-        });
+        }
 
         return topo.nodes.join('');
     };
@@ -43,6 +42,32 @@ describe('Sorter', () => {
         ];
 
         expect(testDeps(scenario)).to.equal('0213547869');
+    });
+
+    it('sorts dependencies (manual)', () => {
+
+        const scenario = [
+            { id: '0', before: 'a' },
+            { id: '1', after: 'f', group: 'a' },
+            { id: '2', before: 'a' },
+            { id: '3', before: ['b', 'c'], group: 'a' },
+            { id: '4', after: 'c', group: 'b' },
+            { id: '5', group: 'c' },
+            { id: '6', group: 'd' },
+            { id: '7', group: 'e' },
+            { id: '8', before: 'd' },
+            { id: '9', after: 'c', group: 'a' }
+        ];
+
+        const topo = new Topo.Sorter();
+        for (const record of scenario) {
+            const options = record.before || record.after || record.group ? { before: record.before, after: record.after, group: record.group } : null;
+            topo.add(record.id, { ...options, manual: true });
+        }
+
+        expect(topo.nodes.join('')).to.equal('');
+        expect(topo.sort().join('')).to.equal('0213547869');
+        expect(topo.nodes.join('')).to.equal('0213547869');
     });
 
     it('sorts dependencies (before as array)', () => {
@@ -66,7 +91,6 @@ describe('Sorter', () => {
 
         expect(testDeps(scenario)).to.equal('120');
     });
-
 
     it('sorts dependencies (seq)', () => {
 
