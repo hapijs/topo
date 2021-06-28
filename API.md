@@ -43,7 +43,7 @@ Returns an array of the topologically sorted nodes (unless `manual` is used in w
 ### `sorter.nodes`
 
 An array of the topologically sorted nodes.  This list is renewed upon each call to [`sorter.add()`](#topoaddnodes-options) unless
-the `manual` is used.
+`manual` is used.
 
 ### `sorter.merge(others)`
 
