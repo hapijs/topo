@@ -14,11 +14,17 @@
     "toposort",
     "topsort"
   ],
+  "eslintConfig": {
+    "extends": [
+      "plugin:@hapi/module"
+    ]
+  },
   "dependencies": {
     "@hapi/hoek": "^9.0.0"
   },
   "devDependencies": {
     "@hapi/code": "8.x.x",
+    "@hapi/eslint-plugin": "*",
     "@hapi/lab": "24.x.x",
     "typescript": "~4.0.2"
   },
