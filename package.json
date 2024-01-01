@@ -1,5 +1,5 @@
 {
-  "name": "@commercial/topo",
+  "name": "topo",
   "description": "Topological sorting with grouping support",
   "version": "2.1.0",
   "repository": "git://github.com/hapijs/topo",
@@ -14,7 +14,7 @@
     "topsort"
   ],
   "dependencies": {
-    "@commercial/hoek": "4.x.x"
+    "hoek": "4.x.x"
   },
   "devDependencies": {
     "code": "4.x.x",

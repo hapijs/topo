@@ -2,7 +2,7 @@
 
 const Code = require('code');
 const Lab = require('lab');
-const Hoek = require('@commercial/hoek');
+const Hoek = require('hoek');
 const Topo = require('..');
 
 
