@@ -1,21 +1,12 @@
-'use strict';
+import { assert } from '@hapi/hoek';
 
-const { assert } = require('@hapi/hoek');
-
-
-const internals = {};
-
-
-exports.Sorter = class {
-
+export class Sorter {
     constructor() {
-
         this._items = [];
         this.nodes = [];
     }
 
     add(nodes, options) {
-
         options = options ?? {};
 
         // Validate rules
@@ -23,7 +14,7 @@ exports.Sorter = class {
         const before = [].concat(options.before ?? []);
         const after = [].concat(options.after ?? []);
         const group = options.group ?? '?';
-        const sort = options.sort ?? 0;                   // Used for merging only
+        const sort = options.sort ?? 0; // Used for merging only
 
         assert(!before.includes(group), `Item cannot come before itself: ${group}`);
         assert(!before.includes('?'), 'Item cannot come before unassociated items');
@@ -41,7 +32,7 @@ exports.Sorter = class {
                 before,
                 after,
                 group,
-                node
+                node,
             };
 
             this._items.push(item);
@@ -58,7 +49,6 @@ exports.Sorter = class {
     }
 
     merge(others) {
-
         if (!Array.isArray(others)) {
             others = [others];
         }
@@ -66,14 +56,14 @@ exports.Sorter = class {
         for (const other of others) {
             if (other) {
                 for (const item of other._items) {
-                    this._items.push(Object.assign({}, item));      // Shallow cloned
+                    this._items.push(Object.assign({}, item)); // Shallow cloned
                 }
             }
         }
 
         // Sort items
 
-        this._items.sort(internals.mergeSort);
+        this._items.sort(mergeSort);
         for (let i = 0; i < this._items.length; ++i) {
             this._items[i].seq = i;
         }
@@ -85,7 +75,6 @@ exports.Sorter = class {
     }
 
     sort() {
-
         const valid = this._sort();
         assert(valid, 'sort created a dependencies error');
 
@@ -93,15 +82,14 @@ exports.Sorter = class {
     }
 
     _sort() {
-
         // Construct graph
 
         const graph = {};
-        const graphAfters = Object.create(null);            // A prototype can bungle lookups w/ false positives
+        const graphAfters = Object.create(null); // A prototype can bungle lookups w/ false positives
         const groups = Object.create(null);
 
         for (const item of this._items) {
-            const seq = item.seq;                           // Unique across all items
+            const seq = item.seq; // Unique across all items
             const group = item.group;
 
             // Determine Groups
@@ -161,12 +149,15 @@ exports.Sorter = class {
         const visited = {};
         const sorted = [];
 
-        for (let i = 0; i < this._items.length; ++i) {          // Looping through item.seq values out of order
+        // Looping through item.seq values out of order
+        for (let i = 0; i < this._items.length; ++i) {
             let next = i;
 
             if (ancestors[i]) {
                 next = null;
-                for (let j = 0; j < this._items.length; ++j) {  // As above, these are item.seq values
+
+                // As above, these are item.seq values
+                for (let j = 0; j < this._items.length; ++j) {
                     if (visited[j] === true) {
                         continue;
                     }
@@ -216,10 +207,8 @@ exports.Sorter = class {
 
         return true;
     }
-};
+}
 
-
-internals.mergeSort = (a, b) => {
-
-    return a.sort === b.sort ? 0 : (a.sort < b.sort ? -1 : 1);
-};
+function mergeSort(a, b) {
+    return a.sort === b.sort ? 0 : a.sort < b.sort ? -1 : 1;
+}

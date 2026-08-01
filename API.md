@@ -5,20 +5,17 @@ The `Topo` object is the container for topologically sorting a list of nodes wit
 ## Example
 
 ```js
-const Topo = require('@hapi/topo');
+import * as Topo from '@hapi/topo';
 
 const morning = new Topo.Sorter();
 
 morning.add('Nap', { after: ['breakfast', 'prep'] });
 
-morning.add([
-    'Make toast',
-    'Pour juice'
-], { before: 'breakfast', group: 'prep' });
+morning.add(['Make toast', 'Pour juice'], { before: 'breakfast', group: 'prep' });
 
 morning.add('Eat breakfast', { group: 'breakfast' });
 
-morning.nodes;        // ['Make toast', 'Pour juice', 'Eat breakfast', 'Nap']
+morning.nodes; // ['Make toast', 'Pour juice', 'Eat breakfast', 'Nap']
 ```
 
 ## Methods
@@ -30,9 +27,10 @@ Creates a new `Sorter` object.
 ### `sorter.add(nodes, [options])`
 
 Specifies an additional node or list of nodes to be topologically sorted where:
-  - `nodes` - a mixed value or array of mixed values to be added as nodes to the topologically sorted list.
-  - `options` - optional sorting information about the `nodes`:
-    - `group` - a string naming the group to which `nodes` should be assigned.  The group name `'?'` is reserved.
+
+- `nodes` - a mixed value or array of mixed values to be added as nodes to the topologically sorted list.
+- `options` - optional sorting information about the `nodes`:
+    - `group` - a string naming the group to which `nodes` should be assigned. The group name `'?'` is reserved.
     - `before` - a string or array of strings specifying the groups that `nodes` must precede in the topological sort.
     - `after` - a string or array of strings specifying the groups that `nodes` must succeed in the topological sort.
     - `sort` - a numerical value used to sort items when performing a `sorter.merge()`.
@@ -42,12 +40,13 @@ Returns an array of the topologically sorted nodes (unless `manual` is used in w
 
 ### `sorter.nodes`
 
-An array of the topologically sorted nodes.  This list is renewed upon each call to [`sorter.add()`](#topoaddnodes-options) unless
+An array of the topologically sorted nodes. This list is renewed upon each call to [`sorter.add()`](#topoaddnodes-options) unless
 `manual` is used.
 
 ### `sorter.merge(others)`
 
 Merges another `Sorter` object into the current object where:
+
 - `others` - the other object or array of objects to be merged into the current one. `null`
   values are ignored.
 
